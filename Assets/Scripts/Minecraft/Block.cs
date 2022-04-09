@@ -5,7 +5,9 @@ using UnityEngine;
 public class Block {
 
     enum Cubeside { BOTTOM, TOP, LEFT, RIGHT, FRONT, BACK };
-    public enum BlockType { GRASS, DIRT, STONE, AIR };
+    public enum BlockType { GRASS, FACE, STONE, AIR };
+    //public enum BlockType { GRASS, AIR, STONE, TREE };
+
     Material material;
     BlockType bType;
 
@@ -13,10 +15,11 @@ public class Block {
     Vector3 pos;
     bool isSolid;
 
-    static Vector2 GrassSide_LBC = new Vector2(3f, 15f) / 16;
+    static Vector2 GrassSide_LBC = new Vector2(2f, 6f) / 16;
     static Vector2 GrassTop_LBC = new Vector2(2f, 6f) / 16;
-    static Vector2 Dirt_LBC = new Vector2(2f, 15f) / 16;
-    static Vector2 Stone_LBC = new Vector2(0f, 14f) / 16;
+    static Vector2 Face_LBC = new Vector2(8f, 8f) / 16;
+    static Vector2 Stone_LBC = new Vector2(7f, 14f) / 16;
+
 
     Vector2[,] blockUVs = {
         {GrassTop_LBC, GrassTop_LBC+new Vector2(1f, 0f)/16,
@@ -25,8 +28,8 @@ public class Block {
         {GrassSide_LBC, GrassSide_LBC+new Vector2(1f, 0f)/16,
             GrassSide_LBC + new Vector2(0f, 1f)/16, GrassSide_LBC + new Vector2(1f, 1f)/16},
 
-        {Dirt_LBC, Dirt_LBC+new Vector2(1f, 0f)/16,
-            Dirt_LBC + new Vector2(0f, 1f)/16, Dirt_LBC + new Vector2(1f, 1f)/16},
+        {Face_LBC, Face_LBC+new Vector2(1f, 0f)/16,
+            Face_LBC + new Vector2(0f, 1f)/16, Face_LBC + new Vector2(1f, 1f)/16},
 
         {Stone_LBC, Stone_LBC+new Vector2(1f, 0f)/16,
             Stone_LBC + new Vector2(0f, 1f)/16, Stone_LBC + new Vector2(1f, 1f)/16},

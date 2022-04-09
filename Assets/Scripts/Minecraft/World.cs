@@ -7,8 +7,8 @@ public class World : MonoBehaviour
 {
     public GameObject player;
     public Material material;
-    public static int chunkSize = 16;
-    public static int radius = 3;
+    public static int chunkSize = 8;
+    public static int radius = 1;
     public static ConcurrentDictionary<string, Chunk> chunkDict;
     public static List<string> toRemove = new List<string>();
     Vector3 lastBuildPos;

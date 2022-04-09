@@ -46,7 +46,7 @@ public class Chunk
                         chunkdata[x, y, z] = new Block(Block.BlockType.GRASS, pos, this, material);
                     }
                     else if (worldY < h) {
-                        chunkdata[x, y, z] = new Block(Block.BlockType.DIRT, pos, this, material);
+                        chunkdata[x, y, z] = new Block(Block.BlockType.STONE, pos, this, material);
                     }
                     else {
                         chunkdata[x, y, z] = new Block(Block.BlockType.AIR, pos, this, material);

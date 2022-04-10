@@ -149,11 +149,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 496611521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa6cefccc64f834ab8e22512698beb9, type: 3}
+  m_Script: {fileID: 11500000, guid: c3ddbc409c2ca584b80632030205317a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 71ae254f663ff084ab171b8a22013f7b, type: 2}
   player: {fileID: 1116170629}
-  material: {fileID: 2100000, guid: 7f29fc555d544ac498a757bc24022098, type: 2}
 --- !u!4 &496611523
 Transform:
   m_ObjectHideFlags: 0

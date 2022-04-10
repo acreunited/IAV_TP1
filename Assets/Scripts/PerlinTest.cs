@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class PerlinTest : MonoBehaviour
 {
-
-    float tt1, tt2, tt3;
-    float inc1 = 0.01f;
-    float inc2 = 0.05f;
-    float inc3 = 0.1f;
-
+    float t = 0;
+    float tt = 0;
+   /// public float 
     // Start is called before the first frame update
     void Start()
     {
@@ -19,15 +16,18 @@ public class PerlinTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
+        t += Time.deltaTime;
+        float hc1 = 0.5f * (Mathf.Cos(2 * t) + 1);
+        float hc2 = 0.25f * (Mathf.Cos(4 * t) + 1);
+        float hc3 = 0.125f * (Mathf.Cos(6 * t) + 1);
+     //   float h = 0.5f * (Mathf.Cos(2 * t) + 1);
+        float hr = Random.Range(0f, 1f);
 
-        float hp1 = Mathf.PerlinNoise(tt1, 1);
-        float hp2 = 0.25f * Mathf.PerlinNoise(tt2, 1);
-        float hp3 = 0.125f * Mathf.PerlinNoise(tt3, 1);
-        tt1 += inc1;
-        tt2 += inc2;
-        tt3 += inc3;
+        float hp = Mathf.PerlinNoise(tt, 1);
 
-        Grapher.Log(hp1+hp2+hp3, "Perlin", Color.yellow);
+        Grapher.Log(hc1, "Cos", Color.green);
+        Grapher.Log(hr, "Random", Color.red);
+        Grapher.Log(hc1 + hc2 + hc3, "Soma de harmonicas", Color.blue);
+        Grapher.Log(hp, "perlin",Color.yellow);
     }
 }

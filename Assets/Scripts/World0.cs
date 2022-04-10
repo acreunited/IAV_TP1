@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class World0 : MonoBehaviour
 {
-
     public GameObject block;
     public int size;
-    
-    IEnumerator BuildWorld() {
-        for( int z = 0; z < size; z++) {
-            for (int y = 0; y<size; y++) {
-                for (int x = 0; x < size; x++) {
+
+    IEnumerator BuildWorld()
+    {
+        for(int x = 0; x < size; x++)
+        {
+            for(int y = 0; y < size; y++)
+            {
+                for( int z = 0; z < size; z++)
+                {
                     Vector3 pos = new Vector3(x, y, z);
-                    GameObject cube = GameObject.Instantiate(block, pos, Quaternion.identity);
+                    GameObject cube = GameObject.Instantiate(block, pos,Quaternion.identity);
                     cube.transform.parent = this.transform;
                     cube.name = x + " " + y + " " + z;
-                    if(Random.Range(0,100)<50) {
+                    if (Random.Range(0, 100) < 50) {
                         cube.GetComponent<MeshRenderer>().material.color = Color.red;
-                    }
+                            }
+                    
                 }
                 
             }
             yield return null;
         }
     }
-
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine( BuildWorld() );
+       StartCoroutine(BuildWorld());
     }
 
     // Update is called once per frame

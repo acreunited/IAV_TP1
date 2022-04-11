@@ -40,15 +40,21 @@ public class Chunk
                     int hs= Utils.GenerateStoneHeight(worldX, worldZ);
                     if (worldY <= hs)
                     {
-                        if(Utils.fBM3D(worldX,worldY,worldZ,1,0.5f)<0.495f)
-                            chunkdata[x, y, z] = new Block(Block.BlockType.STONE, pos, this, material);
-                        else
+                        if(Utils.fBM3D(worldX,worldY,worldZ,1,0.5f)<0.495f) {
+                            if (Random.Range(0, 10)<=8) {
+                                chunkdata[x, y, z] = new Block(Block.BlockType.STONE, pos, this, material);
+                            }
+                            else {
+                                chunkdata[x, y, z] = new Block(Block.BlockType.DIAMOND, pos, this, material);
+                            }
+                        }  
+                        else {
                             chunkdata[x, y, z] = new Block(Block.BlockType.AIR, pos, this, material);
+                        }
                     }
-                    else if (worldY == h)
+                    else if (worldY == h) {
                         chunkdata[x, y, z] = new Block(Block.BlockType.GRASS, pos, this, material);
-
-
+                    }
                     else if (worldY < h)
                     {
                         chunkdata[x, y, z] = new Block(Block.BlockType.DIRT, pos, this, material);

@@ -6,6 +6,7 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
     public Material material;
+    public Material playerMaterial;
     public GameObject player;
     public static int chunkSize=16;
     public static int radius = 3;
@@ -13,6 +14,7 @@ public class World : MonoBehaviour
     public static List<string> toRemove = new List<string>();
     Vector3 lastBuildPos;
     bool drawing;
+   
 
     public static string CreateChunkName(Vector3 v)
     {
@@ -53,7 +55,6 @@ public class World : MonoBehaviour
         Chunk c;
         if (!chunkDict.TryGetValue(name,out c))
         {
-           
             c = new Chunk(chunkPos, material);
             c.goChunk.transform.parent = this.transform;
             chunkDict.TryAdd(c.goChunk.name, c);
@@ -86,7 +87,7 @@ public class World : MonoBehaviour
                 yield return null;
 
             }
-            if (c.Value.goChunk&&Vector3.Distance(player.transform.position, c.Value.goChunk.transform.position) > chunkSize * radius)
+            if (c.Value.goChunk && Vector3.Distance(player.transform.position, c.Value.goChunk.transform.position) > chunkSize * radius)
             {
                 toRemove.Add(c.Key);
             }
@@ -115,6 +116,7 @@ public class World : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         chunkDict = new ConcurrentDictionary<string, Chunk>();
         this.transform.position = Vector3.zero;
         this.transform.rotation = Quaternion.identity;
@@ -127,17 +129,32 @@ public class World : MonoBehaviour
         player.SetActive(true);
     }
 
+
+    void playerCreateCube(Vector3 pos) {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Renderer rend = cube.GetComponent<Renderer>();
+        rend.material = playerMaterial;
+        cube.transform.position = new Vector3(pos.x, pos.y, pos.z);
+    }
+
+  
+
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKey(KeyCode.Alpha5)) {
+            playerCreateCube(player.transform.position);
+        }
+
         Vector3 movement = player.transform.position - lastBuildPos;
-        if(movement.magnitude>chunkSize)
-        {
+       if(movement.magnitude>chunkSize) {
             lastBuildPos = player.transform.position;
             Building(WhichChunk(lastBuildPos), radius);
             Drawing();
         }
-        if(!drawing)
+        if (!drawing) {
             Drawing();
+        }
     }
 }

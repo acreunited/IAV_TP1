@@ -9,6 +9,7 @@ public class CreateQuad : MonoBehaviour
     public enum BlockType { GRASS,DIRT,STONE};
 
     public BlockType bType;
+
     
     static Vector2 GrassSide_LBC = new Vector2(3f, 15f) / 16;
     static Vector2 GrassTop_LBC = new Vector2(2f, 6f) / 16;
@@ -146,6 +147,8 @@ public class CreateQuad : MonoBehaviour
             Destroy(quad.gameObject);
         }
     }
+
+
     // Start is called before the first frame update
     void Start()
     {

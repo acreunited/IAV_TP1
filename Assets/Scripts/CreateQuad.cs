@@ -113,7 +113,7 @@ public class CreateQuad : MonoBehaviour
 
         
     }
-    void CreateCube()
+    public void CreateCube()
     {
         Quad(Cubeside.LEFT);
         Quad(Cubeside.RIGHT);

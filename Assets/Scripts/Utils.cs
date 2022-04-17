@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class Utils 
 {
-    static float smooth=0.002f;
-    static float smooth3D = 10 * smooth;
+    static float[] smooth = new float[] { 0.0002f,0.0005f,0.001f };
+   // static float smooth=0.0002f;
+   // static float smooth3D = 10 * smooth;
     static int maxHeight = 150;
-    static int octaves = 6;
+    //static int octaves = 6;
+    static int[] octaves = new int[] {6,7};
     static float persistence = 0.7f;
     static float offset = 32000f;
     // Start is called before the first frame update
 
     public static int GenerateHeight(float x,float z)
     {
-        return (int)Map(0, maxHeight, 0, 1, fBM(x*smooth, z*smooth, octaves, persistence));
+        int random1 = (int)Random.Range(0, 2);
+        float smoothaux = smooth[random1];
+        int random2 = (int)Random.Range(0, 1);
+        int octavesaux = octaves[random2];
+        return (int)Map(0, maxHeight, 0, 1, fBM(x*smoothaux, z*smoothaux, octavesaux, persistence));
     }
 
     public static int GenerateStoneHeight(float x, float z)
     {
-        return (int)Map(0, maxHeight-10, 0, 1, fBM(x * 3*smooth, z *3*smooth, octaves-1, 1.2f*persistence));
+        int random = (int)Random.Range(0, 2);
+        float smoothaux = smooth[random];
+        int random2 = (int)Random.Range(0, 1);
+        int octavesaux = octaves[random2];
+        return (int)Map(0, maxHeight-10, 0, 1, fBM(x * 3*smoothaux, z *3*smoothaux, octavesaux-1, 1.2f*persistence));
     }
 
     static float Map(float newmin,float newmax,float orimin,float orimax,float val)
@@ -29,7 +39,11 @@ public class Utils
 
     public static float fBM3D(float x,float y,float z, int octaves, float persistence)
     {
-        float xy = fBM(x*smooth3D, y*smooth, octaves,persistence);
+        int random = (int)Random.Range(0, 2);
+        float smoothaux = smooth[random];
+        float smooth3D = smoothaux * 10;
+
+        float xy = fBM(x*smooth3D, y*smooth3D, octaves,persistence);
         float yx = fBM(y * smooth3D, x * smooth3D, octaves, persistence);
         float xz = fBM(x * smooth3D, z * smooth3D, octaves, persistence);
         float zx = fBM(z * smooth3D, x * smooth3D, octaves, persistence);

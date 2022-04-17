@@ -7,6 +7,7 @@ public class World : MonoBehaviour
 {
     public Material material;
     public Material playerMaterial;
+    public GameObject cube;
     public GameObject player;
     public static int chunkSize=16;
     public static int radius = 3;
@@ -131,12 +132,21 @@ public class World : MonoBehaviour
 
 
     void playerCreateCube(Vector3 pos) {
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Vector3 p = new Vector3();
+        p.x = player.transform.position.x;
+        p.y = player.transform.position.y + 1;
+        p.z = player.transform.position.z;
+        Instantiate(cube, p + player.transform.forward * 3, player.transform.rotation);
+        /*GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Renderer rend = cube.GetComponent<Renderer>();
         rend.material = playerMaterial;
-        cube.transform.position = new Vector3(pos.x, pos.y, pos.z);
+        cube.transform.position = new Vector3(pos.x, pos.y+1, pos.z);
+       this.StartCoroutine(WaitForCube());*/
     }
-
+    IEnumerator WaitForCube()
+    {
+        yield return new WaitForSeconds(10);
+    }
   
 
     // Update is called once per frame

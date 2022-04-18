@@ -53,7 +53,17 @@ public class Block
         {
             isSolid = true;
         }
-
+    }
+    public Block(BlockType bType, Vector3 pos, Material material) {
+        this.bType = bType;
+        this.pos = pos;
+        this.material = material;
+        if (bType == BlockType.AIR) {
+            isSolid = false;
+        }
+        else {
+            isSolid = true;
+        }
     }
     void CreateQuad(Cubeside side)
     {
@@ -141,7 +151,6 @@ public class Block
         quad.transform.parent = owner.goChunk.transform;
         MeshFilter mf = quad.gameObject.AddComponent<MeshFilter>();
         mf.mesh = mesh;
-
 
     }
 

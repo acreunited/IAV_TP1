@@ -15,7 +15,10 @@ public class World : MonoBehaviour
     public static List<string> toRemove = new List<string>();
     Vector3 lastBuildPos;
     bool drawing;
-   
+    private float cooldown = 1.5f;
+    private float lastCube;
+    Chunk owner;
+
 
     public static string CreateChunkName(Vector3 v)
     {
@@ -24,7 +27,6 @@ public class World : MonoBehaviour
 
     IEnumerator BuildRecursiveWorld(Vector3 chunkPos,int rad)
     {
-        
 
         int x = (int)chunkPos.x;
         int y = (int)chunkPos.y;
@@ -57,6 +59,7 @@ public class World : MonoBehaviour
         if (!chunkDict.TryGetValue(name,out c))
         {
             c = new Chunk(chunkPos, material);
+        
             c.goChunk.transform.parent = this.transform;
             chunkDict.TryAdd(c.goChunk.name, c);
         }
@@ -128,37 +131,37 @@ public class World : MonoBehaviour
         Building(WhichChunk(lastBuildPos), radius);
         Drawing();
         player.SetActive(true);
+
     }
 
 
     void playerCreateCube(Vector3 pos) {
+        if (Time.time-lastCube < cooldown) {
+            return;
+        }
+        lastCube = Time.time;
         Vector3 p = new Vector3();
         p.x = player.transform.position.x;
         p.y = player.transform.position.y + 1;
         p.z = player.transform.position.z;
         Instantiate(cube, p + player.transform.forward * 3, player.transform.rotation);
-        /*GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Renderer rend = cube.GetComponent<Renderer>();
-        rend.material = playerMaterial;
-        cube.transform.position = new Vector3(pos.x, pos.y+1, pos.z);
-       this.StartCoroutine(WaitForCube());*/
-    }
-    IEnumerator WaitForCube()
-    {
-        yield return new WaitForSeconds(10);
-    }
-  
+
+    }  
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKey(KeyCode.Alpha5)) {
-            playerCreateCube(player.transform.position);
+        
+        if (Input.GetKey(KeyCode.E)) {
+             playerCreateCube(player.transform.position);
+            //owner = null;
+            //Block block = new Block(Block.BlockType.DIAMOND, player.transform.position, owner, playerMaterial);
+            //block.Draw();
+            
         }
 
         Vector3 movement = player.transform.position - lastBuildPos;
-       if(movement.magnitude>chunkSize) {
+        if(movement.magnitude>chunkSize) {
             lastBuildPos = player.transform.position;
             Building(WhichChunk(lastBuildPos), radius);
             Drawing();
@@ -167,4 +170,4 @@ public class World : MonoBehaviour
             Drawing();
         }
     }
-}
+    }

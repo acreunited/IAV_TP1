@@ -141,8 +141,8 @@ public class World : MonoBehaviour {
             playerCreateCube(player.transform.position);
         }
         if (Input.GetKey(KeyCode.E)) {
-            Block block = new Block(Block.BlockType.DIAMOND, player.transform.position, new Chunk(player.transform.position, playerMaterial), playerMaterial);
-            block.Draw();
+            Block block = new Block(Block.BlockType.DIAMOND, player.transform.position, new Chunk(player.transform.position, material), material);
+            block.DrawOnClick();
         }
 
         Vector3 movement = player.transform.position - lastBuildPos;

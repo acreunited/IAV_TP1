@@ -14,9 +14,9 @@ public class World : MonoBehaviour {
     public static List<string> toRemove = new List<string>();
     Vector3 lastBuildPos;
     bool drawing;
-    private float cooldown = 1.5f;
-    private float lastCube;
-
+    public static float cooldown = 1.5f;
+    public static float lastCube;
+    public static bool canCreate = true;
 
     public static string CreateChunkName(Vector3 v) {
         return (int)v.x + " " + (int)v.y + " " + (int)v.z;
@@ -140,9 +140,76 @@ public class World : MonoBehaviour {
         if (Input.GetKey(KeyCode.Q)) {
             playerCreateCube(player.transform.position);
         }
-        if (Input.GetKey(KeyCode.E)) {
-            Block block = new Block(Block.BlockType.DIAMOND, player.transform.position, new Chunk(player.transform.position, material), material);
+        if (Input.GetKey(KeyCode.E)&& canCreate) {
+            canCreate = false;
+                Chunk c = new Chunk(player.transform.position, material);
+                c.goChunk.AddComponent<MeshCollider>();
+                Vector3 pos = new Vector3(player.transform.position.x,player.transform.position.y+1,player.transform.position.z+1);
+                Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+                block.DrawOnClick();
+                this.StartCoroutine(TimeOfCube());
+              
+            
+        }
+        else if (Input.GetKey(KeyCode.R) && canCreate)
+        {
+            canCreate = false;
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y+1, player.transform.position.z - 1);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
             block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
+
+
+        }
+        else if (Input.GetKey(KeyCode.T) && canCreate)
+        {
+            canCreate = false;
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+            block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
+
+
+        }
+        else if (Input.GetKey(KeyCode.Y) && canCreate)
+        {
+            canCreate = false;
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y+3, player.transform.position.z);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+            block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
+
+
+        }
+        else if (Input.GetKey(KeyCode.U) && canCreate)
+        {
+            canCreate = false;
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x+1, player.transform.position.y + 1, player.transform.position.z);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+            block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
+
+
+        }
+        else if (Input.GetKey(KeyCode.I) && canCreate)
+        {
+            canCreate = false;
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x - 1, player.transform.position.y + 1, player.transform.position.z);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+            block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
+
+
         }
 
         Vector3 movement = player.transform.position - lastBuildPos;
@@ -154,5 +221,12 @@ public class World : MonoBehaviour {
         if (!drawing) {
             Drawing();
         }
+    }
+
+    IEnumerator TimeOfCube()
+    {
+        yield return new WaitForSeconds(1);
+        canCreate = true;
+
     }
 }

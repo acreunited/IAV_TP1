@@ -211,6 +211,7 @@ public class Block
     public void DrawOnClick() {
         Debug.Log(bType);
         Debug.Log(isSolid);
+       
         if (bType == BlockType.AIR) return;
 
         // if (!HasSolidNeighbour((int)pos.x - 1, (int)pos.y, (int)pos.z))
@@ -228,6 +229,7 @@ public class Block
 
     }
     void CreateQuadClick(Cubeside side) {
+
         Mesh mesh = new Mesh();
         Vector3 v0 = new Vector3(-0.5f, -0.5f, 0.5f);
         Vector3 v1 = new Vector3(0.5f, -0.5f, 0.5f);
@@ -309,11 +311,14 @@ public class Block
         MeshFilter mf = quad.gameObject.AddComponent<MeshFilter>();
         mf.mesh = mesh;
         MeshRenderer renderer = quad.AddComponent<MeshRenderer>();
+        MeshCollider colider = quad.AddComponent<MeshCollider>();
         renderer.material = material;
 
         Shader shader = Shader.Find("Unlit/Texture");
         renderer.material.shader = shader;
+       
     }
+   
 
 
 

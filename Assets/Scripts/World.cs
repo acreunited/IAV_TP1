@@ -17,6 +17,7 @@ public class World : MonoBehaviour {
     public static float cooldown = 1.5f;
     public static float lastCube;
     public static bool canCreate = true;
+    [SerializeField] private AudioSource createCubeEffect;
 
     public static string CreateChunkName(Vector3 v) {
         return (int)v.x + " " + (int)v.y + " " + (int)v.z;
@@ -115,45 +116,26 @@ public class World : MonoBehaviour {
         player.SetActive(true);
     }
 
-
-    void playerCreateCube(Vector3 pos) {
-        if (Time.time - lastCube < cooldown) {
-            return;
-        }
-        lastCube = Time.time;
-        Vector3 p = new Vector3();
-        p.x = player.transform.position.x;
-        p.y = player.transform.position.y + 1;
-        p.z = player.transform.position.z;
-        Instantiate(cube, p + player.transform.forward * 3, player.transform.rotation);
-        /*GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Renderer rend = cube.GetComponent<Renderer>();
-        rend.material = playerMaterial;
-        cube.transform.position = new Vector3(pos.x, pos.y+1, pos.z);
-       this.StartCoroutine(WaitForCube());*/
-    }
-
  
     // Update is called once per frame
     void Update() {
 
-        if (Input.GetKey(KeyCode.Q)) {
-            playerCreateCube(player.transform.position);
-        }
         if (Input.GetKey(KeyCode.E)&& canCreate) {
             canCreate = false;
-                Chunk c = new Chunk(player.transform.position, material);
-                c.goChunk.AddComponent<MeshCollider>();
-                Vector3 pos = new Vector3(player.transform.position.x,player.transform.position.y+1,player.transform.position.z+1);
-                Block block = new Block(Block.BlockType.GOLD, pos, c, material);
-                block.DrawOnClick();
-                this.StartCoroutine(TimeOfCube());
+            createCubeEffect.Play();
+            Chunk c = new Chunk(player.transform.position, material);
+            c.goChunk.AddComponent<MeshCollider>();
+            Vector3 pos = new Vector3(player.transform.position.x,player.transform.position.y+1,player.transform.position.z+1);
+            Block block = new Block(Block.BlockType.GOLD, pos, c, material);
+            block.DrawOnClick();
+            this.StartCoroutine(TimeOfCube());
               
             
         }
         else if (Input.GetKey(KeyCode.R) && canCreate)
         {
             canCreate = false;
+            createCubeEffect.Play();
             Chunk c = new Chunk(player.transform.position, material);
             c.goChunk.AddComponent<MeshCollider>();
             Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y+1, player.transform.position.z - 1);
@@ -166,6 +148,7 @@ public class World : MonoBehaviour {
         else if (Input.GetKey(KeyCode.T) && canCreate)
         {
             canCreate = false;
+            createCubeEffect.Play();
             Chunk c = new Chunk(player.transform.position, material);
             c.goChunk.AddComponent<MeshCollider>();
             Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
@@ -178,6 +161,7 @@ public class World : MonoBehaviour {
         else if (Input.GetKey(KeyCode.Y) && canCreate)
         {
             canCreate = false;
+            createCubeEffect.Play();
             Chunk c = new Chunk(player.transform.position, material);
             c.goChunk.AddComponent<MeshCollider>();
             Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y+3, player.transform.position.z);
@@ -190,6 +174,7 @@ public class World : MonoBehaviour {
         else if (Input.GetKey(KeyCode.U) && canCreate)
         {
             canCreate = false;
+            createCubeEffect.Play();
             Chunk c = new Chunk(player.transform.position, material);
             c.goChunk.AddComponent<MeshCollider>();
             Vector3 pos = new Vector3(player.transform.position.x+1, player.transform.position.y + 1, player.transform.position.z);
@@ -202,6 +187,7 @@ public class World : MonoBehaviour {
         else if (Input.GetKey(KeyCode.I) && canCreate)
         {
             canCreate = false;
+            createCubeEffect.Play();
             Chunk c = new Chunk(player.transform.position, material);
             c.goChunk.AddComponent<MeshCollider>();
             Vector3 pos = new Vector3(player.transform.position.x - 1, player.transform.position.y + 1, player.transform.position.z);

@@ -41,10 +41,16 @@ public class Block
 
     public Block(BlockType bType, Vector3 pos, Chunk owner, Material material)
     {
-        this.bType = bType;
+       
         this.pos = pos;
         this.owner = owner;
         this.material = material;
+        SetType(bType);
+    }
+
+    public void SetType(BlockType bType)
+    {
+        this.bType = bType;
         if (bType == BlockType.AIR)
         {
             isSolid = false;
